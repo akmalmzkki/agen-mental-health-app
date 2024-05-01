@@ -5,6 +5,7 @@ import os
 from architecture.gai.gemini import gemini_chatbot
 from architecture.gai.gemma import gemma_chatbot
 from architecture.gai.llama import llama_chatbot
+
 from helper.translator import translate
 
 dotenv.load_dotenv()

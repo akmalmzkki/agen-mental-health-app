@@ -12,7 +12,7 @@ from catboost import CatBoostClassifier
 
 dotenv.load_dotenv()
 
-def predict_prompt(
+def prompt_predict(
     family_history, 
     work_interfere, 
     benefits, 
@@ -222,7 +222,7 @@ def stress_predict():
         obs_consequence = st.selectbox("Pernah terdampak masalah kesehatan mental pada karier", ["No", "Yes"])
 
         
-    proba, result, prompt_template = predict_prompt(
+    proba, result, prompt_template = prompt_predict(
         family_history, 
         work_interfere, 
         benefits, 

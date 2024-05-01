@@ -1,6 +1,8 @@
 import streamlit as st
 import string
 import os
+import re
+import tensorflow as tf
 import dotenv
 
 from architecture.gai.gemini import gemini_generate_text
@@ -8,9 +10,6 @@ from architecture.gai.gemma import gemma_generate_text
 from architecture.gai.llama import llama_generate_text
 from architecture.gai.arxiv import arxiv_summarize
 from helper.translator import translate
-
-import re
-import tensorflow as tf
 
 from nltk.corpus import stopwords
 from keras_preprocessing.text import tokenizer_from_json
