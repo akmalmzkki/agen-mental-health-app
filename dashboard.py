@@ -3,7 +3,6 @@ import streamlit as st
 from template.stress_predict import stress_predict
 from template.chatbot import chatbot
 from template.sentiment_predict import sentiment_predict
-# from template.relate_chatbot import relate_chatbot
 # from homepage.email import send_mail
 # from homepage.home import home
 
