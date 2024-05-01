@@ -167,7 +167,7 @@ def models(model, prompt_template):
         response = llama_generate_text(translate("id", "en", prompt_template), os.getenv("GRADIO_CLIENT_API_KEY"))
     return response
         
-def stress_pred():
+def stress_predict():
     st.markdown("<h1 style='text-align: center; font-family: Open Sans;'>🤯 Deteksi Stress 🤯</h1>", unsafe_allow_html=True)
         
     st.divider()

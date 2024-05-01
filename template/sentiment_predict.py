@@ -67,7 +67,7 @@ def models(model, prompt_template):
         response = llama_generate_text(translate("id", "en", prompt_template), os.getenv("GRADIO_CLIENT_API_KEY"))
     return response
 
-def sentiment_pred():
+def sentiment_predict():
     st.markdown("<h1 style='text-align: center; font-family: Open Sans;'>🧠 Konsultasi 💭</h1>", unsafe_allow_html=True)
     st.divider()
     

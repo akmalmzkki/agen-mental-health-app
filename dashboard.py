@@ -1,7 +1,8 @@
 import streamlit as st
-from template.stress_predict import stress_pred
-from template.chatbot import relate_chatbot
-from template.sentiment_predict import sentiment_pred
+
+from template.stress_predict import stress_predict
+from template.chatbot import chatbot
+from template.sentiment_predict import sentiment_predict
 # from template.relate_chatbot import relate_chatbot
 # from homepage.email import send_mail
 # from homepage.home import home
@@ -13,9 +14,9 @@ def main():
     st.sidebar.divider()
     
     menu_options = {
-        "Tanya Moodify": relate_chatbot,
-        "Deteksi Stress": stress_pred,
-        "Konsultasi": sentiment_pred,
+        "Tanya Moodify": chatbot,
+        "Deteksi Stress": stress_predict,
+        "Konsultasi": sentiment_predict,
     }
     
     st.sidebar.info("Pilih opsi dari menu dibawah untuk melanjutkan ⬇️")

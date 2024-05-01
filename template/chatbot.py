@@ -9,7 +9,7 @@ from helper.translator import translate
 
 dotenv.load_dotenv()
 
-def relate_chatbot():
+def chatbot():
     st.markdown("<h1 style='text-align: center; font-family: Open Sans;'>🗨️ Tanya Moodify 💬</h1>", unsafe_allow_html=True)
     st.divider()
 
