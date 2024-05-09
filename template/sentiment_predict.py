@@ -19,9 +19,9 @@ from keras_preprocessing.sequence import pad_sequences
 from nltk.stem import WordNetLemmatizer
 
 dotenv.load_dotenv()
+nltk.download('stopwords')
 
 def remove_stopwords(text):
-    nltk.download('stopwords')
     stop = set(stopwords.words('english'))
     punctuation = list(string.punctuation)
     stop.update(punctuation)
