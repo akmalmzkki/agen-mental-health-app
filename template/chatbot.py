@@ -5,6 +5,7 @@ import os
 from architecture.gai.gemini import gemini_chatbot
 from architecture.gai.gemma import gemma_chatbot
 from architecture.gai.llama import llama_chatbot
+from architecture.gai.gpt4 import gpt4_chatbot
 
 from helper.translator import translate
 
@@ -14,7 +15,7 @@ def chatbot():
     st.markdown("<h1 style='text-align: center; font-family: Open Sans;'>🗨️ Tanya Moodify 💬</h1>", unsafe_allow_html=True)
     st.divider()
 
-    genAi1, genAi2, genAi3 = st.columns(3)
+    genAi1, genAi2, genAi3, genAi4 = st.columns(4)
     model = st.session_state.get("model", "gemini")
     
     if genAi1.button("🌴 Gemini"):
@@ -23,14 +24,20 @@ def chatbot():
         st.success("🎉 Model Gemini telah aktif!")
     
     if genAi2.button("🧠 Gemma"):
-        model = "gemma"
-        st.session_state.model = model
-        st.success("🎉 Model Gemma telah aktif")
+        # model = "gemma"
+        # st.session_state.model = model
+        # st.success("🎉 Model Gemma telah aktif")
+        st.error("🚧 Maaf, model Gemma sedang dalam perbaikan. Silakan gunakan model lain.")
     
     if genAi3.button("🦙 Llama"):
         model = "llama"
         st.session_state.model = model
         st.success("🎉 Model Llama telah aktif")
+        
+    if genAi4.button("🧠 GPT-4"):
+        model = "gpt4"
+        st.session_state.model = model
+        st.success("🎉 Model GPT-4 telah aktif")
     
     if "messages" not in st.session_state.keys():
         st.session_state.messages = [{
@@ -82,9 +89,12 @@ def chatbot():
                 elif model == "gemma":
                     using = "🧠 Gemma"
                     response = gemma_chatbot(translate("id", "en", prompt_template), os.getenv("GRADIO_CLIENT_API_KEY"))
-                else:
+                elif model == "llama":
                     using = "🦙 Llama"
                     response = llama_chatbot(translate("id", "en", prompt_template), os.getenv("GRADIO_CLIENT_API_KEY"))
+                else:
+                    using = "🧠 GPT-4"
+                    response = gpt4_chatbot(translate("id", "en", prompt_template), os.getenv("AZURE_OPENAI_API_KEY"))
 
                 st.success("🎉 Berhasil! Model yang digunakan adalah " + using)
                 st.warning(response) 

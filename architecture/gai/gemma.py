@@ -2,7 +2,7 @@ from gradio_client import Client
 from helper.translator import translate
 
 def gemma_generate_text(message, api_key):
-    client = Client("Omnibus/google-gemma", hf_token=api_key)
+    client = Client("Omnibus/google-gemma-dev", hf_token=api_key)
     result = client.predict(
             "Give the best advice to users. Without asking reciprocal questions",	# str  in 'System Prompt (optional)' Textbox component
             message,	        # str  in 'Prompt' Textbox component
@@ -24,7 +24,7 @@ def gemma_generate_text(message, api_key):
     return response
 
 def gemma_chatbot(message, api_key):
-    client = Client("Omnibus/google-gemma", hf_token=api_key)
+    client = Client("Omnibus/google-gemma-dev", hf_token=api_key)
     result = client.predict(
             "Our conversations should be on the lines of discussions around mental health",	# str  in 'System Prompt (optional)' Textbox component
             message,	        # str  in 'Prompt' Textbox component

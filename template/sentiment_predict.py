@@ -8,6 +8,7 @@ import dotenv
 from architecture.gai.gemini import gemini_generate_text
 from architecture.gai.gemma import gemma_generate_text
 from architecture.gai.llama import llama_generate_text
+from architecture.gai.gpt4 import gpt4_generate_text
 from architecture.gai.arxiv import arxiv_summarize
 from helper.translator import translate
 
@@ -62,15 +63,17 @@ def models(model, prompt_template):
         response = gemini_generate_text(translate("id", "en", prompt_template), os.getenv("GEMINI_API_KEY"))
     elif model == "gemma":
         response = gemma_generate_text(translate("id", "en", prompt_template), os.getenv("GRADIO_CLIENT_API_KEY"))
-    else:
+    elif model == "llama":
         response = llama_generate_text(translate("id", "en", prompt_template), os.getenv("GRADIO_CLIENT_API_KEY"))
+    else:
+        response = gpt4_generate_text(translate("id", "en", prompt_template), os.getenv("AZURE_OPENAI_API_KEY"))
     return response
 
 def sentiment_predict():
     st.markdown("<h1 style='text-align: center; font-family: Open Sans;'>🧠 Konsultasi 💭</h1>", unsafe_allow_html=True)
     st.divider()
     
-    genAi1, genAi2, genAi3 = st.columns(3)
+    genAi1, genAi2, genAi3, genAi4 = st.columns(4)
     model = st.session_state.get("model", "gemini")
     
     if genAi1.button("🌴 Gemini"):
@@ -79,18 +82,20 @@ def sentiment_predict():
         st.success("🎉 Model Gemini telah aktif!")
     
     if genAi2.button("🧠 Gemma"):
-        model = "gemma"
-        st.session_state.model = model
-        st.success("🎉 Model Gemma telah aktif")
+        # model = "gemma"
+        # st.session_state.model = model
+        # st.success("🎉 Model Gemma telah aktif")
+        st.error("🚧 Maaf, model Gemma sedang dalam perbaikan. Silakan gunakan model lain.")
     
     if genAi3.button("🦙 Llama"):
         model = "llama"
         st.session_state.model = model
         st.success("🎉 Model Llama telah aktif")
     
-    with st.expander("🪄 Informasi"):
-        st.write("Sentiment Stress merupakan fitur yang digunakan untuk memprediksi tingkat stress berdasarkan teks yang Anda masukkan. Teks yang dimasukkan akan diolah dan diprediksi tingkat stressnya.")
-        st.write("Fitur ini menggunakan model Bi-LSTM yang telah dilatih sebelumnya dengan dataset yang telah disiapkan.")
+    if genAi4.button("🧠 GPT-4"):
+        model = "gpt4"
+        st.session_state.model = model
+        st.success("🎉 Model GPT-4 telah aktif")
         
     message = st.text_area("", height=200, max_chars=500, placeholder="📝 Bagaimana perasaan Anda dalam beberapa minggu terakhir, apakah Anda merasa cemas, sedih, atau tertekan secara berlebihan?")
     
@@ -109,19 +114,19 @@ def sentiment_predict():
             if message:
                 prediction = predict_stress(translate("id", "en", message))
                 if prediction <= 0.2:
-                    st.success(f"😁 Terdeteksi, nampaknya, Anda memiliki tingkat stress rendah sebesar: {prediction*100:.2f}%")
+                    st.success(f"😁 Terdeteksi, nampaknya, Anda memiliki tingkat emosi yang rendah sebesar: {prediction*100:.2f}%")
                     st.success(models(model, response))
                 elif prediction <= 0.4:
-                    st.info(f"😊, Terdeteksi, nampaknya, Anda memiliki tingkat stress sedang-rendah sebesar: {prediction*100:.2f}%")
+                    st.info(f"😊, Terdeteksi, nampaknya, Anda memiliki tingkat emosi yang sedang-rendah sebesar: {prediction*100:.2f}%")
                     st.info(models(model, response))
                 elif prediction <= 0.6:
-                    st.info(f"😐, Terdeteksi, nampaknya, Anda memiliki tingkat stress sedang sebesar: {prediction*100:.2f}%")
+                    st.info(f"😐, Terdeteksi, nampaknya, Anda memiliki tingkat emosi yang sedang sebesar: {prediction*100:.2f}%")
                     st.info(models(model, response))
                 elif prediction <= 0.8:
-                    st.warning(f"😕, Terdeteksi, nampaknya, Anda memiliki tingkat stress tinggi-sekali sebesar: {prediction*100:.2f}%")
+                    st.warning(f"😕, Terdeteksi, nampaknya, Anda memiliki tingkat emosi yang tinggi-sekali sebesar: {prediction*100:.2f}%")
                     st.warning(models(model, response))
                 else:
-                    st.error(f"😔, Terdeteksi, nampaknya, Anda memiliki tingkat stress tinggi sebesar: {prediction*100:.2f}%")
+                    st.error(f"😔, Terdeteksi, nampaknya, Anda memiliki tingkat emosi yang tinggi sebesar: {prediction*100:.2f}%")
                     st.error(models(model, response))
             else:
                 st.error("⚠️ Mohon masukkan teks terlebih dahulu.")

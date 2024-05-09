@@ -1,5 +1,5 @@
 catboost==1.2.3
-gradio_client==0.12.0
+gradio_client==0.16.1
 google-generativeai==0.4.0
 openai==1.14.2
 numpy

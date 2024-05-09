@@ -3,8 +3,6 @@ import streamlit as st
 from template.stress_predict import stress_predict
 from template.chatbot import chatbot
 from template.sentiment_predict import sentiment_predict
-# from homepage.email import send_mail
-# from homepage.home import home
 
 def main():
     st.set_page_config(page_title="Stress Prediction", page_icon=":brain:", layout="wide")
