@@ -21,7 +21,7 @@ from nltk.stem import WordNetLemmatizer
 dotenv.load_dotenv()
 nltk.download('stopwords')
 nltk.download('wordnet')
-nltk.download()
+# nltk.download()
 
 def remove_stopwords(text):
     stop = set(stopwords.words('english'))
