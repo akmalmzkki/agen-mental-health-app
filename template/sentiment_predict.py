@@ -4,6 +4,7 @@ import os
 import re
 import tensorflow as tf
 import dotenv
+import nltk
 
 from architecture.gai.gemini import gemini_generate_text
 from architecture.gai.gemma import gemma_generate_text
@@ -20,6 +21,7 @@ from nltk.stem import WordNetLemmatizer
 dotenv.load_dotenv()
 
 def remove_stopwords(text):
+    nltk.download('stopwords')
     stop = set(stopwords.words('english'))
     punctuation = list(string.punctuation)
     stop.update(punctuation)
