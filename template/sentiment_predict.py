@@ -21,7 +21,17 @@ from nltk.stem import WordNetLemmatizer
 dotenv.load_dotenv()
 nltk.download('stopwords')
 nltk.download('wordnet')
-# nltk.download()
+
+def preprocess_text(text):
+    text = text.lower()
+    text = re.sub(r'\n', ' ', text)
+    text = re.sub(r'http\S+|www\S+|https\S+', '', text, flags=re.MULTILINE)
+    text = re.sub(r'\d+', '', text)
+    text = text.encode('utf-8', errors='ignore').decode('utf-8')
+    text = re.sub(r'((www\.[^\s]+)|(https?://[^\s]+)|(http?://[^\s]+))|rt|wa|co|bit|ly', '', text)
+    text = re.sub(r'<.*?>', '', text)
+    text = re.sub(r'\s+', ' ', text)
+    return text
 
 def remove_stopwords(text):
     stop = set(stopwords.words('english'))
@@ -33,11 +43,6 @@ def remove_stopwords(text):
         if i.strip().lower() not in stop:
             final_text.append(i.strip())
     return " ".join(final_text)
-
-def preprocess_text(text):
-    text = text.lower()
-    text = re.sub(r'((www\.[^\s]+)|(https?://[^\s]+)|(http?://[^\s]+))|rt|wa|co|bit|ly', '', text)
-    return text
 
 def wnl_lemmatize(text):
     wnl = WordNetLemmatizer()
