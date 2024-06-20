@@ -121,22 +121,25 @@ def sentiment_predict():
     if prediksi:
         with st.spinner("Sedang memproses..."):
             if message:
-                prediction = predict_stress(translate("id", "en", message))
-                if prediction <= 0.2:
-                    st.success(f"😁 Terdeteksi, nampaknya, Anda memiliki tingkat emosi yang rendah sebesar: {prediction*100:.2f}%")
-                    st.success(models(model, response))
-                elif prediction <= 0.4:
-                    st.info(f"😊, Terdeteksi, nampaknya, Anda memiliki tingkat emosi yang sedang-rendah sebesar: {prediction*100:.2f}%")
-                    st.info(models(model, response))
-                elif prediction <= 0.6:
-                    st.info(f"😐, Terdeteksi, nampaknya, Anda memiliki tingkat emosi yang sedang sebesar: {prediction*100:.2f}%")
-                    st.info(models(model, response))
-                elif prediction <= 0.8:
-                    st.warning(f"😕, Terdeteksi, nampaknya, Anda memiliki tingkat emosi yang tinggi-sekali sebesar: {prediction*100:.2f}%")
-                    st.warning(models(model, response))
+                if len(message) < 100:
+                    st.error("⚠️ Mohon masukkan teks yang lebih panjang.")
                 else:
-                    st.error(f"😔, Terdeteksi, nampaknya, Anda memiliki tingkat emosi yang tinggi sebesar: {prediction*100:.2f}%")
-                    st.error(models(model, response))
+                    prediction = predict_stress(translate("id", "en", message))
+                    if prediction <= 0.2:
+                        st.success(f"😁 Terdeteksi, nampaknya, Anda memiliki tingkat emosi yang rendah sebesar: {prediction*100:.2f}%")
+                        st.success(models(model, response))
+                    elif prediction <= 0.4:
+                        st.info(f"😊, Terdeteksi, nampaknya, Anda memiliki tingkat emosi yang sedang-rendah sebesar: {prediction*100:.2f}%")
+                        st.info(models(model, response))
+                    elif prediction <= 0.6:
+                        st.info(f"😐, Terdeteksi, nampaknya, Anda memiliki tingkat emosi yang sedang sebesar: {prediction*100:.2f}%")
+                        st.info(models(model, response))
+                    elif prediction <= 0.8:
+                        st.warning(f"😕, Terdeteksi, nampaknya, Anda memiliki tingkat emosi yang tinggi-sekali sebesar: {prediction*100:.2f}%")
+                        st.warning(models(model, response))
+                    else:
+                        st.error(f"😔, Terdeteksi, nampaknya, Anda memiliki tingkat emosi yang tinggi sebesar: {prediction*100:.2f}%")
+                        st.error(models(model, response))
             else:
                 st.error("⚠️ Mohon masukkan teks terlebih dahulu.")
         
